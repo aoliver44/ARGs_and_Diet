@@ -1,3 +1,55 @@
+###################################################################
+# File: merging_features_new_data.R                               #
+#                                                                 #
+# Purpose: Given raw inputs for AMR project, output feature       #
+#          table of unique features, without NAs. Additionally    #
+#          drop features which are correlated at Spearman rho =   #
+#          0.8. Output non-correlated microbiome features too.    #
+#                                                                 #
+#                                                                 #
+# Author: A.Oliver				                                        #
+# Date: 1/19/21						                                        #
+#                                                                 #
+# Inputs (22):                                                    #
+# (1) abx_cluster_andrew.csv                                      #
+# (2) qiime1_alphadiv_fiber.txt                                   #
+# (3) qiime1_alphadiv_fat.txt                                     #
+# (4) qiime1_alphadiv_protein.txt                                 #
+# (5) qiime1_alphadiv_carb.txt                                    #
+# (6) qiime1_alphadiv_filt.txt                                    #
+# (7) FL100_FFQ_cleaned_all_dt.csv                                #
+# (8) report_for_DL_7262021_updated_AO.csv                        #
+# (9) FL100_stool_variables.txt                                   #
+# (10) CountryOrigin.xlsx                                         #
+# (11) stoolc_model2_features.csv                                 #
+# (12) stoolc_model3_features.csv                                 #
+# (13) CRP_WBC_9102021.csv                                        #
+# (14) ASA24_average_fiber_summary_variables.txt                  #
+# (15) FL100_HEI_n378.txt                                         #
+# (16) DEXA_ethnicities04272020.csv                               #
+# (17) FL100_FINAL_Bins_agesexbmi_clean.csv                       #
+# (18) CTSC24532USDAWHNRCNu-                                      #
+#         VitalsPhysiologyforJ_DATA_2021-10-07_1622.csv           # 
+# (19) CTSC24532USDAWHNRCNu-                                      #
+#         GIMarkers7Oct2021_DATA_2021-10-07_1627.csv              #
+# (20) HEI FFQ_scores_12072021.csv                                #
+# (21) mpa_rare_5833371_perm_5_family.csv                         #
+# (22) mpa_rare_5833371_perm_5_genus.csv                          #
+#                                                                 #
+#                     #####################                       #
+#                                                                 #
+# Outputs (6):                                                    #    
+# (1) diet-life_input.csv                                         #
+# (2) co-correlated-features_spearman80_covariates.csv            #
+# (3) diet-life_input_bi.csv                                      #
+# (4) diet-life_input_low-high.csv                                #
+# (5) microbiome_family.csv                                       #
+# (6) microbiome_genus.csv                                        #
+#                                                                 #
+# Usage: Run the entire script, line by line, without changes.    #
+###################################################################
+
+
 ############################
 ## MERGE ALL DATA - NEW DATA
 ############################
@@ -11,7 +63,7 @@ setwd("/home/datasets/new_datasets/")
 
 features <- list()
 
-## START WITH ANDREW'S CLUSTERS
+## START WITH ANDREW'S antibiotic CLUSTERS
 abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",") 
 abx_cluster <- abx_cluster %>% select(., -`...1`) 
 features <- append(x = features, values = colnames(abx_cluster))
@@ -122,35 +174,38 @@ ffq_hei <- read_delim("HEI FFQ_scores_12072021.csv", delim = ",")
 ffq_hei <- ffq_hei %>% select(., subject_id, hei_ffq_totalscore) %>% clean_names()
 features <- append(x = features, values = colnames(ffq_hei))
 
-features <- unique(unlist(features))
+## merge all features together from above files
+abx_cluster_features <- merge(fiber_alpha, abx_cluster, by = "subject_id", all = T) %>%
+  merge(fat_alpha, by = "subject_id", all = T) %>%
+  merge(protein_alpha, by = "subject_id", all = T) %>%
+  merge(carb_alpha, by = "subject_id", all = T) %>%
+  merge(total_food_alpha, by = "subject_id", all = T) %>%
+  merge(lifestyle_data, by = "subject_id", all = T) %>%
+  merge(country_origin, by = "subject_id", all = T) %>%
+  merge(stool_variables, by = "subject_id", all = T) %>%
+  merge(ffq_data, by = "subject_id", all = T) %>%
+  #merge(micro_alpha, by = "subject_id", all = T) %>%
+  merge(inflammatory_markers, by = "subject_id", all = T) %>%
+  merge(inflammation_markers_2, by = "subject_id", all = T) %>%
+  merge(bmi_etc, by = "subject_id", all = T) %>%
+  merge(asa_fiber_avg, by = "subject_id", all = T) %>%
+  merge(asa_hei, by = "subject_id", all = T) %>%
+  merge(stoolc_model23, by = "subject_id", all = T) %>%
+  merge(vitals, by = "subject_id", all = T) %>%
+  merge(ffq_hei, by = "subject_id", all = T) %>%
+  merge(ethnicities, by = "subject_id", all = T)
 
-abx_cluster_features <- merge(fiber_alpha, abx_cluster, by = "subject_id") %>%
-  merge(fat_alpha, by = "subject_id") %>%
-  merge(protein_alpha, by = "subject_id") %>%
-  merge(carb_alpha, by = "subject_id") %>%
-  merge(total_food_alpha, by = "subject_id") %>%
-  merge(lifestyle_data, by = "subject_id") %>%
-  merge(country_origin, by = "subject_id") %>%
-  merge(stool_variables, by = "subject_id") %>%
-  merge(ffq_data, by = "subject_id") %>%
-  #merge(micro_alpha, by = "subject_id") %>%
-  merge(inflammatory_markers, by = "subject_id") %>%
-  merge(inflammation_markers_2, by = "subject_id") %>%
-  merge(bmi_etc, by = "subject_id") %>%
-  merge(asa_fiber_avg, by = "subject_id") %>%
-  merge(asa_hei, by = "subject_id") %>%
-  merge(stoolc_model23, by = "subject_id") %>%
-  merge(vitals, by = "subject_id") %>%
-  merge(ffq_hei, by = "subject_id") %>%
-  merge(ethnicities, by = "subject_id")
-  
-
+## there will be duplicated features:  
+## lean into the duplicated-ness! get rid of the .x's and .y's 
 colnames(abx_cluster_features) = gsub("\\.y", "", colnames(abx_cluster_features))
 colnames(abx_cluster_features) = gsub("\\.x", "", colnames(abx_cluster_features))
+## should be the number of columns in the next dataframe
+length(unique(colnames(abx_cluster_features)))
+## now select the not duplicated column names! It matches the above!
 abx_cluster_features <- subset(abx_cluster_features, select=which(!duplicated(names(abx_cluster_features)))) 
 
-
-## clean up NAs
+## clean up NAs somewhat MANUALLY. This is an effort to keep samples
+## over some features.
 gg_miss_upset(abx_cluster_features) 
 # clean up data based on results - drop some samples or features
 abx_cluster_features <- abx_cluster_features %>%
@@ -158,25 +213,25 @@ abx_cluster_features <- abx_cluster_features %>%
   filter(., wbc_bd1 != "NA") %>%
   select(., -tempavg) %>%
   select(., -fecal_neopterin) %>%
-  select(., -waist_hip)
-
-# check the missing values again
-gg_miss_upset(abx_cluster_features) 
-abx_cluster_features <- abx_cluster_features %>%
+  select(., -waist_hip) %>%
   select(., -c(do_you_ever_use_tanning_beds_or_sun_lamps, dov1))
-gg_miss_upset(abx_cluster_features) 
 
-## output dataframe for directed hypothesis testing
+## add in some manual features (nutrients based on calorie intake)
 abx_cluster_features$total_fiber_per_kcal <- ((abx_cluster_features$total_fiber / abx_cluster_features$dt_kcal) * 1000)
 abx_cluster_features$dt_fiber_sol_per_kcal <- ((abx_cluster_features$dt_fiber_sol / abx_cluster_features$dt_kcal) * 1000)
 abx_cluster_features$pf_mps_total_per_kcal <- (abx_cluster_features$pf_mps_total / abx_cluster_features$dt_kcal) * 1000
 abx_cluster_features$pf_meat_per_kcal <- (abx_cluster_features$pf_meat / abx_cluster_features$dt_kcal) * 1000
-for_directed_hypothesis_testing <- abx_cluster_features
 
-# rename the cluster column!
+
+## rename the cluster column! Make it numeric for downstream ML.
+## And check for more NAs again (dropping samples with them)
 abx_cluster_features_no_na <- abx_cluster_features %>% 
   dplyr::mutate(., cluster = ifelse(cluster == "low", 0, 
                                  ifelse(cluster == "medium", 1, 2))) %>% drop_na()
+
+## Stop here for source scripts (i.e. directed hypothesis testing script)
+
+stop("Stopped here for source scripts")
 
 #write.csv(abx_cluster_features, file = "abx_cluster_features.csv", quote = F, row.names = F)
 #write.csv(abx_cluster_features_no_na, file = "abx_cluster_features_no_na.csv", quote = F, row.names = F)
@@ -186,6 +241,7 @@ abx_cluster_features_no_na <- abx_cluster_features %>%
 ###########################################
 
 ## Clean up and preprocess with mikropml
+## This will drop zero variance features and one-hot encode catagorical features
 abx_cluster_features_pre_process <- abx_cluster_features_no_na %>% droplevels()
 abx_cluster_features_post_process <- preprocess_data(dataset = abx_cluster_features_pre_process,
                                                      method = NULL,
@@ -193,6 +249,8 @@ abx_cluster_features_post_process <- preprocess_data(dataset = abx_cluster_featu
                                                      collapse_corr_feats = T, 
                                                      remove_var = "zv")
 
+## tweak mikrop processed data to ensure important covariates are always 
+## in the data:
 pre_corr_clean <- abx_cluster_features_post_process$dat_transformed %>% 
   # pre-remove correlated variables to sex, age, bmi that end up in
   # the feature-set before these variables do (these are important covariates!)
@@ -204,16 +262,22 @@ cor_tmp <- mikropml:::group_correlated_features(pre_corr_clean,
                                                 corr_thresh = 0.80)
 cor_tmp <- as.data.frame(cor_tmp)
 cor_tmp <- cor_tmp %>% separate(., col = cor_tmp, into = c("keep", "co-correlated"), sep = "\\|", extra = "merge")
-## filter out only 1 of the co-correlated groups, results in 146 features (including subject ID)
+
+## filter out only 1 of the co-correlated groups, 
+## results in 146 features (including subject ID)
 corr_clean <- pre_corr_clean %>% select(., cor_tmp$keep)
-## write to file
+
+## write all this work to files:
 corr_clean_write <- corr_clean %>% select(., -subject_id) %>% clean_names()
+
 ## All clusters - 187 samples 
 write.csv(corr_clean_write, file = "output_for_ML/diet-life_input.csv", quote = F, row.names = FALSE)
 write.csv(cor_tmp, file = "output_for_ML/co-correlated-features_spearman80_covariates.csv", quote = F, row.names = FALSE)
+
 ## Just low-medium clusters - 140 samples
 corr_clean_bi <- corr_clean_write %>% filter(., cluster != 2)
 write.csv(corr_clean_bi, file = "output_for_ML/diet-life_input_bi.csv", quote = F, row.names = F)
+
 ## Just low-high clusters - 92 samples
 corr_clean_low_high <- corr_clean_write %>% filter(., cluster != 1) %>% 
   mutate(., cluster = ifelse(cluster == 2, 1, 0))
@@ -222,6 +286,9 @@ write.csv(corr_clean_low_high, file = "output_for_ML/diet-life_input_low-high.cs
 #############
 ## MICROBIOME
 #############
+
+## Much of the following analysis is same as above, just with microbiome
+## data
 
 ## read in rarefied microbiome - ***family level***
 microbiome_family <- read_delim("/home/datasets/from_andrew/mpa_rare_5833371_perm_5_family.csv", delim = ",")
