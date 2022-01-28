@@ -1,3 +1,25 @@
+###################################################################
+# File: Supp_figure_dheas.R                             
+#                                                                 
+# Purpose: Examine abundance of DHEAS across ARG clusters                                 
+#                                                                 
+#                                                                 
+# Author: A.Oliver				                                        
+# Date: 1/20/21						                                        
+#                                                                 
+# Inputs (1):                                                     
+# (1) Be able to source merging_features_new_data script          
+#      successfully 
+# (2) clinical_range_dheas.csv - clinical range of dheas
+#                                                                 
+#                     #####################                       
+#                                                                 
+# Outputs (1):                                                        
+# (1) supplemental figure 3 about DHEAS abundance
+#                                                                 
+# Usage: Run the entire script without changes.                   
+###################################################################
+
 #########################
 ## Supp. Figure 3 - DHEAS
 #########################
