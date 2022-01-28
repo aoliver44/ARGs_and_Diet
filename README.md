@@ -2,8 +2,7 @@
  Scripts and docker images used in paper: Association of diet and antimicrobial resistance in healthy US adults. Paper has been published in XXXXXX and can be found here: XXXXXX
 
 ### **Data Availibility**
-- All sequence data can be found through the following NCBI BioProject ID PRJNA795985.
-- Requests for FL100 human subjects data can be made by contacting this email: XXXXXXX. Requests will be reviewed every few months to determine elegibility for data release.
+- Metagenomes are deposited in NCBI Sequence Read Archive (SRA) under the [study accession SRP354271](https://dataview.ncbi.nlm.nih.gov/object/PRJNA795985). Requests for non-metagenomic data from the USDA ARS WHNRC Nutritional Phenotyping Study used in this analysis should be made via an email to the senior WHNRC author on the publication of interest. Requests will be reviewed quarterly by a committee consisting of the study investigators.
 
 ### **Containers for reproducibility**
 - A docker container for analysis in R and ML analysis are provided. Docker must be installed to run. These images were built and run on Docker v4.1.1. To run, inside the directory of the appropriate folder (R or python), run: ```docker build -t [tag_name] .```
