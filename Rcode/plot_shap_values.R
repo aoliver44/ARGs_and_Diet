@@ -1,3 +1,25 @@
+###################################################################
+# File: plot_shap_values.R                                               
+#                                                                 
+# Purpose: Replotting Shap values in R from python
+#                                                                 
+#                                                                 
+# Author: A.Oliver				                                        
+# Date: 1/20/21						                                        
+#                                                                 
+# Inputs (1):                                                     
+# (1) diet-life_bi_class1_shapvals-NEW.csv
+#      Shap values from ML python script output
+# (2) diet-life_input_bi.csv
+#      raw values input to random forest                                                          
+#                     #####################                       
+#                                                                 
+# Outputs (1):                                                        
+# (1) shap plot for editing in affinity
+#                                                                 
+# Usage: Run the entire script without changes.                   
+##################################################################
+
 ###################
 ## Plot SHAP Values
 ###################

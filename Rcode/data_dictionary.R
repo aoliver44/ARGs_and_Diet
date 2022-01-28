@@ -1,8 +1,7 @@
 ###################################################################
 # File: data_dictionary.R                             
 #                                                                 
-# Purpose: After sourcing data wrangling script, assess directed  
-#          hypotheses statistics                                  
+# Purpose: Creating data dictionary of features used in analysis                                 
 #                                                                 
 #                                                                 
 # Author: A.Oliver				                                        
