@@ -17,3 +17,6 @@
 - R analyses were run locally on a intel-based macbook pro
 - ML analyses were run on Ceres, a supercomputer for use by USDA researchers
 - Sequence preprocessesing was run on Spitfire, a slurm-based HPC cluster managed by the UC Davis Genome Center
+
+### **Figures**
+- to generate most of the main/supp figures and tables in the manuscript, run generate_figures.R script with the necessary scripts for sourcing and necessary input data
