@@ -1,3 +1,26 @@
+###################################################################
+# File: blythe_plots.R                                               
+#                                                                 
+# Purpose: Plot POLR regression results (smoothed scatter plots
+#          of significant results from POLR analysis)                                
+#                                                                 
+#                                                                 
+# Author: A.Oliver				                                        
+# Date: 1/27/21						                                        
+#                                                                 
+# Inputs (1):                                                     
+# (1) FL100_merged_norm_final.csv
+# (2) abx_cluster_andrew.csv
+#
+#                     #####################                       
+#                                                                 
+# Outputs (1):                                                        
+# (1) Figure with 4 panels, of 4 significant results from POLR
+#      analysis.
+#                                                                 
+# Usage: Run the entire script without changes.                   
+##################################################################
+
 #################
 ## BLYTHE PLOTS
 #################

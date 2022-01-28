@@ -1,5 +1,5 @@
 ###################################################################
-# File: figures.R                                               
+# File: generate_figures.R                                               
 #                                                                 
 # Purpose: Generate most of the figures in the manuscript                                
 #                                                                 
