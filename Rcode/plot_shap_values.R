@@ -101,7 +101,7 @@ YYYYZ"
 
 
 
-feature_plots_shap$pd_whole_tree_total + feature_plots_raw$pd_whole_tree_total +
+figure_4a <- feature_plots_shap$pd_whole_tree_total + feature_plots_raw$pd_whole_tree_total +
   feature_plots_shap$dheas_bd1 + feature_plots_raw$dheas_bd1 +
   feature_plots_shap$ur_epi_ug_gcreat + feature_plots_raw$ur_epi_ug_gcreat +
   feature_plots_shap$dt_fiber_sol_per_kcal + feature_plots_raw$dt_fiber_sol_per_kcal +
@@ -117,7 +117,5 @@ feature_plots_shap$pd_whole_tree_total + feature_plots_raw$pd_whole_tree_total +
   #feature_plots_shap$avg_fibe_tnfs + feature_plots_raw$avg_fibe_tnfs +
   plot_layout(design = fig_layout_final)
 
-#####################
-## COMBINED BAR CHART
-#####################
+
 

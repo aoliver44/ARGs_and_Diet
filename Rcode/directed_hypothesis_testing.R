@@ -17,7 +17,7 @@
 # Outputs (1):                                                    #    
 # (1) data frame with directed hypotheses statistics              #
 #                                                                 #
-# Usage: Run the entire script, line by line, without changes.    #
+# Usage: Run the entire script without changes.                   #
 ###################################################################
 
 
@@ -31,11 +31,12 @@ library(patchwork)
 
 ## source or run merging_features_new_data.R to 
 ## generate merged features object (abx_cluster_features)
-source("/home/scripts/merging_features_new_data.R")
+## abx_cluster_features is all the merged data, with NAs.
+#source("/home/scripts/merging_features_new_data.R")
 
-## Generate the data:
+## Select the features we care about and drop samples with NAs:
 for_directed_hypothesis_testing <- abx_cluster_features %>%
-  select(., cluster, avg_fibe_tnfs, per_kcal_fiber_tnfs, total_fiber, total_fiber_per_kcal,
+  select(., subject_id, cluster, avg_fibe_tnfs, per_kcal_fiber_tnfs, total_fiber, total_fiber_per_kcal,
          dt_fiber_sol, dt_fiber_sol_per_kcal, dt_prot_animal, dt_sfat, dt_kcal,
          pf_mps_total, pf_mps_total_per_kcal, pf_meat, pf_meat_per_kcal, hei_asa24_totalscore, hei_ffq_totalscore,
          fecal_ph, bmi_final) %>% drop_na()
@@ -647,6 +648,7 @@ high_arg<- append(high_arg, c("26.1 +/- 4.08  (0.540)"))
 ## Complete the DF
 ##################
 
-View(data.frame(Factor, data_source, 
+directed_hypothesis_table <- data.frame(Factor, data_source, 
            low_arg, medium_arg, high_arg, 
-           transformation_test, p_low_med_tukey, p_low_high_tukey,p_med_high_tukey, p_all))
+           transformation_test, p_low_med_tukey, p_low_high_tukey,p_med_high_tukey, p_all)
+

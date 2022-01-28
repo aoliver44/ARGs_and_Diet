@@ -9,7 +9,7 @@ setwd("/home/datasets/new_datasets/")
 
 lefse <- read.table(file = "lefse_family_raw.csv", sep = ",", header = T)[1:4]
 lefse$Cluster <- factor(lefse$Cluster, levels = c("low", "medium", "high"), ordered = T)
-lefse %>% ggplot() + aes(x = reorder(Family,-LDA), weight = LDA) +
+lefse_plot <- lefse %>% ggplot() + aes(x = reorder(Family,-LDA), weight = LDA) +
   geom_bar(aes(fill = Cluster)) +
   theme_bw() +
   theme(axis.text.x.bottom = element_text(angle = 90),

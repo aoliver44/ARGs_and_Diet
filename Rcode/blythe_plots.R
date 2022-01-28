@@ -6,6 +6,7 @@ library(tidyverse)
 library(reshape2)
 library(ggsci)
 library(ggplot2)
+library(reshape2)
 setwd("/home/datasets/")
 
 ## read in data
@@ -40,7 +41,7 @@ meg_1039_data <- amr_genes_MEGID %>%
   select(., subject_id, meg_1039)
 meg_1039_data <- merge(meg_1039_data, blythe_data, by = "subject_id")
 
-meg_1039_data %>% select(., dt_kcal, dt_fiber_sol, meg_1039, cluster, subject_id) %>%
+figure_3ab <- meg_1039_data %>% select(., dt_kcal, dt_fiber_sol, meg_1039, cluster, subject_id) %>%
   melt(., id.vars = c("subject_id", "cluster", "meg_1039")) %>%
   ggplot() + aes(x = value, y = log(meg_1039 + 0.1)) +
   geom_point(aes(color = cluster)) +
@@ -53,7 +54,7 @@ meg_1488_data <- amr_genes_mech %>%
   select(., subject_id, multi_metal_resistance)
 meg_1488_data <- merge(meg_1488_data, blythe_data, by = "subject_id")
 
-meg_1488_data %>% select(., dt_fibe, dt_fiber_sol, multi_metal_resistance, cluster, subject_id) %>%
+figure_3cd <- meg_1488_data %>% select(., dt_fibe, dt_fiber_sol, multi_metal_resistance, cluster, subject_id) %>%
   melt(., id.vars = c("subject_id", "cluster", "multi_metal_resistance")) %>%
   ggplot() + aes(x = value, y = log(multi_metal_resistance + 0.1)) +
   geom_point(aes(color = cluster)) +
@@ -61,3 +62,4 @@ meg_1488_data %>% select(., dt_fibe, dt_fiber_sol, multi_metal_resistance, clust
   facet_wrap(. ~ variable, scales = "free") +
   theme_bw() +
   scale_color_jama() + theme(panel.grid.minor = element_blank())
+

@@ -1,3 +1,27 @@
+###################################################################
+# File: gen_basic_env.R                                           #
+#                                                                 #
+# Purpose: Generate rarefied microbiome datasets and microbiome   #
+#          data grouped by family and genus levels                #
+#                                                                 #
+#                                                                 #
+# Author: A.Oliver				                                        #
+# Date: 1/24/21						                                        #
+#                                                                 #
+# Inputs (2):                                                     #
+# (1) MPA formated combined Kraken outputs (combined_MPA.txt)     #
+# (2) ABX cluster metadata by sample                              #
+#                                                                 #                                                                #
+#                     #####################                       #
+#                                                                 #
+# Outputs (2):                                                    #    
+# (1) mpa_rare_5833371_perm_5.rds R data structure rarefied table #
+# (1) mpa_rare_5833371_perm_5_family.csv at family level          #
+#                                                                 #
+# Usage: Run the entire script without changes.                   #
+###################################################################
+
+
 #######################
 #### GEN BASIC ENV ####
 #######################
@@ -161,7 +185,7 @@ mpa_taxa_group_otu <- mpa_taxa_group_otu %>%
                                     ifelse(cluster == "medium", 1, 2))) %>% 
   drop_na() %>% 
   clean_names()
-write.csv(mpa_taxa_group_otu, file = "/home/datasets/from_andrew/mpa_rare_5833371_perm_5_genus.csv", quote = F, row.names = F)
+write.csv(mpa_taxa_group_otu, file = "/home/datasets/from_andrew/mpa_rare_5833371_perm_5_family.csv", quote = F, row.names = F)
 
 
 
