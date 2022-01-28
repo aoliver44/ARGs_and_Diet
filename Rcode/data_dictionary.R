@@ -1,3 +1,27 @@
+###################################################################
+# File: data_dictionary.R                             
+#                                                                 
+# Purpose: After sourcing data wrangling script, assess directed  
+#          hypotheses statistics                                  
+#                                                                 
+#                                                                 
+# Author: A.Oliver				                                        
+# Date: 1/20/21						                                        
+#                                                                 
+# Inputs (1):                                                     
+# (1) Be able to source merging_features_new_data script          
+#      successfully 
+# (2) Data_dictionary_raw_for_supplement.xlsx
+#                                                                 
+#                     #####################                       
+#                                                                 
+# Outputs (1):                                                        
+# (1) supplemental_data_dictionary.txt - data dictionary for the
+#      features used in this analysis
+#                                                                 
+# Usage: Run the entire script without changes.                   
+###################################################################
+
 ###################################
 ## Data Dictionary for supplemental
 ###################################
