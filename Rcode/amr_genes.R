@@ -1,8 +1,8 @@
 ###################################################################
 # File: amr_genes.R                                               
 #                                                                 
-# Purpose: After sourcing data wrangling script, assess directed  
-#          hypotheses statistics                                  
+# Purpose: Examine the composition and diversity of ARGs in 
+#          FL100 cohort
 #                                                                 
 #                                                                 
 # Author: A.Oliver				                                        
@@ -16,7 +16,8 @@
 #                                                                 
 # Outputs (1):                                                        
 # (1) Bar plots of AMR genes
-# (2) Plot with 
+# (2) Diversity plot of AMR genes
+# (3) AMR clusters based on percentiles
 #                                                                 
 # Usage: Run the entire script without changes.                   
 ##################################################################

@@ -1,3 +1,26 @@
+###################################################################
+# File: amr_genes.R                                               
+#                                                                 
+# Purpose: Examine the composition and diversity of microbes in 
+#          guts of individuals in the FL100 cohort                             
+#                                                                 
+#                                                                 
+# Author: A.Oliver				                                        
+# Date: 1/20/21						                                        
+#                                                                 
+# Inputs (1):                                                     
+# (1) mpa_rare_5833371_perm_5.rds
+# (2) abx_cluster_andrew.csv
+#                                                                 
+#                     #####################                       
+#                                                                 
+# Outputs (1):                                                        
+# (1) Figure 2 (microbiome shannon diversity + NMDS)
+#                                                                 
+# Usage: Run the entire script without changes.                   
+##################################################################
+
+
 ######################
 ## Microbiome analyses
 ######################
