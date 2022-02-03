@@ -26,7 +26,6 @@
 library(gtsummary)
 library(tidyverse)
 library(patchwork)
-library(kableExtra)
 
 ##########
 ## Table 1
@@ -79,7 +78,7 @@ figure_2a + figure_2b +
 
 source(file = "/home/scripts/directed_hypothesis_testing.R")
 
-directed_hypothesis_table %>% kbl() %>% kable_classic()
+View(directed_hypothesis_table)
 
 
 ############
