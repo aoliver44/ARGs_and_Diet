@@ -608,6 +608,12 @@
       "Repository": "CRAN",
       "Hash": "2ace6c4a06297d0b364e0444384a2b82"
     },
+    "gtsummary": {
+      "Package": "gtsummary",
+      "Version": "1.5.2",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "haven": {
       "Package": "haven",
       "Version": "2.4.3",
