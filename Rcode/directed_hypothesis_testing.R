@@ -57,20 +57,29 @@ Factor <- c("Average fiber intake_tnfs, g")
 data_source <- c("ASA24")
 ## test homogeneity of sample variances
 leveneTest(for_directed_hypothesis_testing$avg_fibe_tnfs, group = for_directed_hypothesis_testing$cluster)
+
+## model function of avg fiber intake in response to AMR cluster
 mod <- aov(avg_fibe_tnfs ~ cluster, data = for_directed_hypothesis_testing)
+
 ## test normality of residuals
 resids <- residuals(mod)
 shapiro.test(resids)
+
 ## transform to fit anova asumptions
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$avg_fibe_tnfs)
+## make new var that is now normalized based on previous data
 for_directed_hypothesis_testing$avg_fibe_tnfs_boxcox <- (bestNormalize::boxcox(for_directed_hypothesis_testing$avg_fibe_tnfs))$x.t
-## many good options, Box-Cox transformation performed
+## append information to dataframe
 transformation_test <- c("BoxCox, ANOVA, Tukey")
+## re-model boxcox transformed avg fiber and AMR cluster
 mod <- aov(avg_fibe_tnfs_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
 resids <- residuals(mod)
 shapiro.test(resids)
+
+## double check homogeneity of variances assumption still met
 leveneTest(for_directed_hypothesis_testing$avg_fibe_tnfs_boxcox, group = for_directed_hypothesis_testing$cluster)
+
 ## test the anova and do post-hoc tests
 summary(mod)
 p_all <- c("0.308")
