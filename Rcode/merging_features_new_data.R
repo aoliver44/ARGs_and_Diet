@@ -204,11 +204,17 @@ length(unique(colnames(abx_cluster_features)))
 ## now select the not duplicated column names! It matches the above!
 abx_cluster_features <- subset(abx_cluster_features, select=which(!duplicated(names(abx_cluster_features)))) 
 
+## add in some manual features (nutrients based on calorie intake)
+abx_cluster_features$total_fiber_per_kcal <- ((abx_cluster_features$total_fiber / abx_cluster_features$dt_kcal) * 1000)
+abx_cluster_features$dt_fiber_sol_per_kcal <- ((abx_cluster_features$dt_fiber_sol / abx_cluster_features$dt_kcal) * 1000)
+abx_cluster_features$pf_mps_total_per_kcal <- (abx_cluster_features$pf_mps_total / abx_cluster_features$dt_kcal) * 1000
+abx_cluster_features$pf_meat_per_kcal <- (abx_cluster_features$pf_meat / abx_cluster_features$dt_kcal) * 1000
+
 ## clean up NAs somewhat MANUALLY. This is an effort to keep samples
 ## over some features.
 gg_miss_upset(abx_cluster_features) 
 # clean up data based on results - drop some samples or features
-abx_cluster_features <- abx_cluster_features %>%
+abx_cluster_features_pre_no_na <- abx_cluster_features %>%
   filter(., stool_consistency_class != "NA") %>%
   filter(., wbc_bd1 != "NA") %>%
   select(., -tempavg) %>%
@@ -216,16 +222,9 @@ abx_cluster_features <- abx_cluster_features %>%
   select(., -waist_hip) %>%
   select(., -c(do_you_ever_use_tanning_beds_or_sun_lamps, dov1))
 
-## add in some manual features (nutrients based on calorie intake)
-abx_cluster_features$total_fiber_per_kcal <- ((abx_cluster_features$total_fiber / abx_cluster_features$dt_kcal) * 1000)
-abx_cluster_features$dt_fiber_sol_per_kcal <- ((abx_cluster_features$dt_fiber_sol / abx_cluster_features$dt_kcal) * 1000)
-abx_cluster_features$pf_mps_total_per_kcal <- (abx_cluster_features$pf_mps_total / abx_cluster_features$dt_kcal) * 1000
-abx_cluster_features$pf_meat_per_kcal <- (abx_cluster_features$pf_meat / abx_cluster_features$dt_kcal) * 1000
-
-
 ## rename the cluster column! Make it numeric for downstream ML.
 ## And check for more NAs again (dropping samples with them)
-abx_cluster_features_no_na <- abx_cluster_features %>% 
+abx_cluster_features_no_na <- abx_cluster_features_pre_no_na %>% 
   dplyr::mutate(., cluster = ifelse(cluster == "low", 0, 
                                  ifelse(cluster == "medium", 1, 2))) %>% drop_na()
 
