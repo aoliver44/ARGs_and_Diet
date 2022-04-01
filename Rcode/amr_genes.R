@@ -35,6 +35,7 @@ library(vegan)
 library(bestNormalize)
 library(janitor)
 library(patchwork)
+library(car)
 setwd("/home/datasets/")
 
 ## define function for CV
@@ -45,23 +46,6 @@ CV <- function(x){
 ## read in data
 amr_genes <- read.csv("amr_genes/FL100_merged_norm_final.csv", check.names = F)
 abx_cluster <- read_delim("from_andrew/abx_cluster_andrew.csv", delim = ",")[2:3]
-
-## group AMR by mechanism
-amr_genes_mech <- amr_genes %>% 
-  select(., -c("MEGID", "Gene", "Group")) %>%
-  group_by(., Mechanism) %>% 
-  summarise(across(where(is.numeric), sum)) %>%
-  column_to_rownames(., var = "Mechanism") %>%
-  t() %>% as.data.frame() %>% clean_names() %>%
-  rownames_to_column(., var = "subject_id")
-## group AMR by gene
-amr_genes_mech <- amr_genes %>% 
-  select(., -c("MEGID", "Mechanism", "Group")) %>%
-  group_by(., Gene) %>% 
-  summarise(across(where(is.numeric), sum)) %>%
-  column_to_rownames(., var = "Gene") %>%
-  t() %>% as.data.frame() %>% clean_names() %>%
-  rownames_to_column(., var = "subject_id")
 
 ########################
 ## Barplot for mechanism
@@ -106,10 +90,16 @@ amr_genes_mech_melt <- amr_genes_mech_melt %>% group_by(., subject_id) %>%
 
 ## get andrew clusters based on quartiles
 ## ex high is > 0.75 , med = 0.25-0.50, low < 0.25 OF TOTAL AMR ABUNDANCE
+#amr_genes_mech_melt <- amr_genes_mech_melt %>% 
+#  ungroup() %>% 
+#  mutate(., andrew_cluster = ifelse(total_gene_abundance < 49.85, "low", 
+#                                    ifelse(total_gene_abundance > 60.02, "high", "medium")))
+
+## based on tertiles
 amr_genes_mech_melt <- amr_genes_mech_melt %>% 
   ungroup() %>% 
-  mutate(., andrew_cluster = ifelse(total_gene_abundance < 49.85, "low", 
-                                    ifelse(total_gene_abundance > 60.02, "high", "medium")))
+  mutate(., andrew_cluster = ifelse(total_gene_abundance < 51.63147, "low", 
+                                    ifelse(total_gene_abundance > 57.67642, "high", "medium")))
 
 ## plot distribution of andrew-clusters (figure 1C)
 andrew_cluster_volcano <- amr_genes_mech_melt %>% 
@@ -128,7 +118,7 @@ figure_1c <- ggplot(data = andrew_cluster_volcano, aes(x = andrew_cluster, y = t
 
 abx_cluster_andrew <- andrew_cluster_volcano %>% select(., -total_gene_abundance) %>% rename(., "cluster" = "andrew_cluster")
 ## Write main abundance file
-write.csv(abx_cluster_andrew, file = "from_andrew/abx_cluster_andrew.csv", sep = ",", quote = F)
+#write.csv(abx_cluster_andrew, file = "from_andrew/abx_cluster_andrew.csv", quote = F)
 
 ## plot
 ## relative abundance 
@@ -146,9 +136,9 @@ figure_1a <- ggplot(data = amr_genes_mech_melt, aes(x = reorder(as.factor(subjec
   theme_bw(base_size = 12) +
   theme(axis.text.x.bottom = element_blank(), axis.ticks.x = element_blank(), panel.grid = element_blank()) + 
   labs(y = "Normalized Gene Abundance", x = "Individual") +
-  geom_hline(yintercept = 54.59) +
-  geom_hline(yintercept = 49.84) +
-  geom_hline(yintercept = 60.03) +
+  geom_hline(yintercept = 54.59) + # quartiles
+  geom_hline(yintercept = 49.84) + # quartiles
+  geom_hline(yintercept = 60.03) + # quartiles
   scale_fill_d3()
 
 ## plot the low abundant (Figure 1B)
@@ -172,22 +162,14 @@ figure_1b <- ggplot(data = subset(low_abundant_amr, andrew_cluster == "high"), a
   theme_bw(base_size = 12) +
   theme(axis.text.x.bottom = element_blank(), axis.ticks.x = element_blank(), panel.grid = element_blank()) + 
   labs(y = "Normalized Gene Abundance", x = "Low abundant category in\n High-ARG individuals") +
-  geom_vline(xintercept = "6067") +
-  geom_vline(xintercept = "6053") +
+  #geom_vline(xintercept = "6067") +
+  #geom_vline(xintercept = "6053") +
   #geom_hline(yintercept = 60.03) +
   scale_fill_jco()
 
-#################
-## PLOT FIGURE 1
-#################
-
-# fig_1_layout <- "
-# AAB
-# AAC"
-# 
-# figure_1a + figure_1b + figure_1c + 
-#   patchwork::plot_layout(design = fig_1_layout) + 
-#   patchwork::plot_annotation(tag_levels = 'A')
+######################
+## Supplemental Figure
+######################
 
 ### beta diversity
 ## Permanovas
@@ -268,7 +250,6 @@ amr_genes_mech_melt <- amr_genes_mech_melt %>%
   mutate(., andrew_cluster = ifelse(total_gene_abundance < 49.85, "low", 
                                     ifelse(total_gene_abundance > 60.02, "high", "medium")))
 
-
 amr_genes_mech_beta <- amr_genes_mech %>% column_to_rownames(., var = "subject_id")
 
 ## calculate alpha diveristy
@@ -310,9 +291,7 @@ leveneTest(alpha_diversity_data_melt_test$value_boxcox, group = alpha_diversity_
 summary(mod)
 TukeyHSD(x = mod)
 ## describe
-alpha_diversity_data_melt_test %>% group_by(., cluster) %>% summarise(., average = mean(value),
-                                  
-                                                                                                           sd = sd(value))
+alpha_diversity_data_melt_test %>% group_by(., cluster) %>% summarise(., average = mean(value), sd = sd(value))
 ##################################
 ## WRITE AMR ABUNDANCE FILE FOR ML 
 ##################################

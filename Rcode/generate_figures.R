@@ -42,8 +42,7 @@ merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
   mutate(., sex = ifelse(sex == 1, "male", "female")) %>%
   tbl_summary(., by = "cluster", 
               statistic = list(all_continuous() ~ "{mean} ({min}, {max})", 
-                               all_categorical() ~ "{n} ({p}%)"))
-
+                               all_categorical() ~ "{n} ({p}%)")) 
 
 ############
 ## Figure 1
@@ -113,23 +112,70 @@ figure_4a + figure_4c_1 + figure_4c_2 +
   patchwork::plot_annotation(tag_levels = 'A')
   
 
-  
 ########################
 ## Supplemental Figure 1
 ########################
 
-#source(file = "/home/scripts/amr_genes.R")
-supplemental_fig1
+## Table 1
+source(file = "/home/scripts/merging_features_new_data.R")
+abx_cluster$cluster <- factor(abx_cluster$cluster, 
+                              levels = c("low", "medium", "high"), ordered = T)
+merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
+  merge(., ethnicities, by = "subject_id", all = T) %>%
+  merge(., country_origin, by = "subject_id", all = T) %>%
+  filter(., cluster != "") %>% 
+  select(., cluster, age, bmi_final, sex, ethnicity, birth_country) %>%
+  mutate(., sex = ifelse(sex == 1, "male", "female")) %>%
+  tbl_summary(., by = "cluster", 
+              statistic = list(all_continuous() ~ "{mean} ({min}, {max})", 
+                               all_categorical() ~ "{n} ({p}%)")) 
+
+## Table 2
+abx_cluster$cluster <- factor(abx_cluster$cluster, 
+                              levels = c("low", "medium", "high"), ordered = T)
+subseted_features_no_na %>%
+  filter(., cluster != "") %>% 
+  select(., cluster, age, bmi_final, sex, ethnicity, birth_country) %>%
+  mutate(., sex = ifelse(sex == 1, "male", "female")) %>%
+  tbl_summary(., by = "cluster", 
+              statistic = list(all_continuous() ~ "{mean} ({min}, {max})", 
+                               all_categorical() ~ "{n} ({p}%)")) 
+
+## Figure
+
 
 ########################
 ## Supplemental Figure 2
 ########################
 
-source(file = "/home/scripts/Supp_figure_lefse.R")
-lefse_plot
+source(file = "/home/scripts/amr_genes.R")
+source(file = "/home/scripts/suppp_figure_cat-bat.R")
+
+supp_1_layout <- "
+AA
+BB
+CC"
+sup_fig_1a_top + sup_fig_1a_bottom + supplemental_fig1 +
+  patchwork::plot_layout(design = supp_1_layout) + 
+  patchwork::plot_annotation(tag_levels = 'A')
+  
 
 ########################
 ## Supplemental Figure 3
+########################
+
+source(file = "/home/scripts/Supp_figure_lefse.R")
+lefse_plot
+
+
+########################
+## Supplemental Figure 4
+########################
+
+
+
+########################
+## Supplemental Figure 5
 ########################
 
 source(file = "/home/scripts/Supp_figure_dheas.R")
