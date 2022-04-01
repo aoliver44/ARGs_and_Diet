@@ -59,7 +59,7 @@ library(Hmisc)
 library(janitor)
 library(mikropml)
 library(naniar)
-setwd("/home/datasets/new_datasets/")
+setwd("/home/data/")
 
 features <- list()
 
