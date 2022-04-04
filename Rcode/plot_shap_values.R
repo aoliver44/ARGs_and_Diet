@@ -125,18 +125,18 @@ YYYYZ"
 
 figure_4a <- feature_plots_shap$pd_whole_tree_total + feature_plots_raw$pd_whole_tree_total +
   feature_plots_shap$dheas_bd1 + feature_plots_raw$dheas_bd1 +
-  feature_plots_shap$ur_epi_ug_gcreat + feature_plots_raw$ur_epi_ug_gcreat +
-  feature_plots_shap$dt_fiber_sol_per_kcal + feature_plots_raw$dt_fiber_sol_per_kcal +
-  feature_plots_shap$per_kcal_fiber_tnfs + feature_plots_raw$per_kcal_fiber_tnfs +
-  feature_plots_shap$dt_p225 + feature_plots_raw$dt_p225 +
-  feature_plots_shap$f15d1 + feature_plots_raw$f15d1 +
-  feature_plots_shap$pd_whole_tree_fat + feature_plots_raw$pd_whole_tree_fat +
-  feature_plots_shap$pf_seafd_low + feature_plots_raw$pf_seafd_low +
-  feature_plots_shap$plasma_lbp_bd1 + feature_plots_raw$plasma_lbp_bd1 +
-  feature_plots_shap$pf_organ + feature_plots_raw$pf_organ +
-  feature_plots_shap$hdl_bd1 + feature_plots_raw$hdl_bd1 +
-  feature_plots_shap$coumestrol + feature_plots_raw$coumestrol +
-  feature_plots_shap$avg_fibe_tnfs + feature_plots_raw$avg_fibe_tnfs +
+  #feature_plots_shap$ur_epi_ug_gcreat + feature_plots_raw$ur_epi_ug_gcreat +
+  #feature_plots_shap$dt_fiber_sol_per_kcal + feature_plots_raw$dt_fiber_sol_per_kcal +
+  #feature_plots_shap$per_kcal_fiber_tnfs + feature_plots_raw$per_kcal_fiber_tnfs +
+  #feature_plots_shap$dt_p225 + feature_plots_raw$dt_p225 +
+  #feature_plots_shap$f15d1 + feature_plots_raw$f15d1 +
+  #feature_plots_shap$pd_whole_tree_fat + feature_plots_raw$pd_whole_tree_fat +
+  #feature_plots_shap$pf_seafd_low + feature_plots_raw$pf_seafd_low +
+  #feature_plots_shap$plasma_lbp_bd1 + feature_plots_raw$plasma_lbp_bd1 +
+  #feature_plots_shap$pf_organ + feature_plots_raw$pf_organ +
+  #feature_plots_shap$hdl_bd1 + feature_plots_raw$hdl_bd1 +
+  #feature_plots_shap$coumestrol + feature_plots_raw$coumestrol +
+  #feature_plots_shap$avg_fibe_tnfs + feature_plots_raw$avg_fibe_tnfs +
   plot_layout(design = fig_layout_final)
 
 

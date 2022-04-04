@@ -30,11 +30,11 @@ library(reshape2)
 library(ggsci)
 library(ggplot2)
 library(reshape2)
-setwd("/home/datasets/")
+setwd("/home/data/")
 
 ## read in data
-amr_genes <- read.csv("amr_genes/FL100_merged_norm_final.csv", check.names = F)
-abx_cluster <- read_delim("from_andrew/abx_cluster_andrew.csv", delim = ",")[2:3]
+amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F)
+abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",")[2:3]
 
 ## group AMR by MEGID
 amr_genes_MEGID <- amr_genes %>% 
@@ -64,14 +64,14 @@ meg_1039_data <- amr_genes_MEGID %>%
   select(., subject_id, meg_1039)
 meg_1039_data <- merge(meg_1039_data, blythe_data, by = "subject_id")
 
-figure_3ab <- meg_1039_data %>% select(., dt_kcal, dt_fiber_sol, meg_1039, cluster, subject_id) %>%
+figure_3ab <- meg_1039_data %>% select(., dt_fiber_sol, meg_1039, cluster, subject_id) %>%
   melt(., id.vars = c("subject_id", "cluster", "meg_1039")) %>%
   ggplot() + aes(x = value, y = log(meg_1039 + 0.1)) +
   geom_point(aes(color = cluster)) +
   geom_smooth(se = F, color = "red") + 
   facet_wrap(. ~ variable, scales = "free") +
   theme_bw() +
-  scale_color_jama() + theme(panel.grid.minor = element_blank())
+  scale_color_jama() + theme(panel.grid.minor = element_blank(), legend.position = "none")
 
 meg_1488_data <- amr_genes_mech %>%
   select(., subject_id, multi_metal_resistance)
@@ -85,4 +85,16 @@ figure_3cd <- meg_1488_data %>% select(., dt_fibe, dt_fiber_sol, multi_metal_res
   facet_wrap(. ~ variable, scales = "free") +
   theme_bw() +
   scale_color_jama() + theme(panel.grid.minor = element_blank())
+
+## supplement figure
+
+supplemental_fig4a <- meg_1039_data %>% select(., dt_kcal, meg_1039, cluster, subject_id) %>%
+  melt(., id.vars = c("subject_id", "cluster", "meg_1039")) %>%
+  ggplot() + aes(x = value, y = log(meg_1039 + 0.1)) +
+  geom_point(aes(color = cluster)) +
+  geom_smooth(se = F, color = "red") + 
+  facet_wrap(. ~ variable, scales = "free") +
+  theme_bw() +
+  scale_color_jama() + theme(panel.grid.minor = element_blank(), legend.position = "none")
+
 

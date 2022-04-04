@@ -25,7 +25,7 @@
 
 library(tidyverse)
 library(ggsci)
-setwd("/home/datasets/new_datasets/")
+setwd("/home/data")
 ## supp figure 2
 
 lefse <- read.table(file = "lefse_family_raw.csv", sep = ",", header = T)[1:4]

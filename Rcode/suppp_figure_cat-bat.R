@@ -3,7 +3,7 @@
 ## Purpose: ordinate AMR data and overlay vectors of CAT - BAT data
 
 ## setwd
-setwd("/home")
+setwd("/home/data")
 
 ## load packages
 library(tidyverse)
@@ -11,13 +11,13 @@ library(vegan)
 library(ggsci)
 
 ## load in the cat-bat files
-cat_bat_family_otu <- readr::read_delim(file = "/home/cat_bat/cat_bat_family.csv")
+cat_bat_family_otu <- readr::read_delim(file = "cat_bat_family.csv")
 cat_bat_family_otu <- cat_bat_family_otu %>% select(., -bacterium)
 
 ## load in the AMR files
 ## read in data
-amr_genes <- read.csv("/home/datasets/amr_genes/FL100_merged_norm_final.csv", check.names = F)
-abx_cluster <- read_delim("/home/datasets/from_andrew/abx_cluster_andrew.csv", delim = ",")[2:3]
+amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F)
+abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",")[2:3]
 abx_cluster <- abx_cluster %>% filter(., subject_id %in% cat_bat_family_otu$subject_id)
 ########################
 ## Barplot for mechanism

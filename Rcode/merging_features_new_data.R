@@ -228,9 +228,6 @@ abx_cluster_features_no_na <- abx_cluster_features_pre_no_na %>%
   dplyr::mutate(., cluster = ifelse(cluster == "low", 0, 
                                  ifelse(cluster == "medium", 1, 2))) %>% drop_na()
 
-## Stop here for source scripts (i.e. directed hypothesis testing script)
-
-stop("Stopped here for source scripts")
 
 #write.csv(abx_cluster_features, file = "abx_cluster_features.csv", quote = F, row.names = F)
 #write.csv(abx_cluster_features_no_na, file = "abx_cluster_features_no_na.csv", quote = F, row.names = F)
@@ -281,6 +278,11 @@ corr_clean_bi <- corr_clean_write %>% filter(., cluster != 2)
 corr_clean_low_high <- corr_clean_write %>% filter(., cluster != 1) %>% 
   mutate(., cluster = ifelse(cluster == 2, 1, 0))
 #write.csv(corr_clean_low_high, file = "/home/output_for_ML/diet-life_input_low-high.csv", quote = F, row.names = F)
+
+
+## Stop here for source scripts (i.e. directed hypothesis testing script)
+
+stop("Stopped here for source scripts")
 
 #############
 ## MICROBIOME

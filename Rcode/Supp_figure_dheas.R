@@ -26,7 +26,7 @@
 
 library(tidyverse)
 library(ggpubr)
-setwd("/home/datasets/new_datasets/")
+setwd("/home/data/")
 #source(file = "/home/scripts/merging_features_new_data.R")
 ## Figure 3A - DHEAS Raw
 ## make sure you generate files from merging_features_new_data.R
