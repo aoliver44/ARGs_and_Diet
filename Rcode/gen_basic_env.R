@@ -185,7 +185,8 @@ mpa_taxa_group_otu <- mpa_taxa_group_otu %>%
                                     ifelse(cluster == "medium", 1, 2))) %>% 
   drop_na() %>% 
   clean_names()
-write.csv(mpa_taxa_group_otu, file = "/home/datasets/from_andrew/mpa_rare_5833371_perm_5_family.csv", quote = F, row.names = F)
+
+#write.csv(mpa_taxa_group_otu, file = "/home/datasets/from_andrew/mpa_rare_5833371_perm_5_family.csv", quote = F, row.names = F)
 
 
 

@@ -270,17 +270,17 @@ corr_clean <- pre_corr_clean %>% select(., cor_tmp$keep)
 corr_clean_write <- corr_clean %>% select(., -subject_id) %>% clean_names()
 
 ## All clusters - 187 samples 
-write.csv(corr_clean_write, file = "output_for_ML/diet-life_input.csv", quote = F, row.names = FALSE)
-write.csv(cor_tmp, file = "output_for_ML/co-correlated-features_spearman80_covariates.csv", quote = F, row.names = FALSE)
+#write.csv(corr_clean_write, file = "/home/output_for_ML/diet-life_input.csv", quote = F, row.names = FALSE)
+#write.csv(cor_tmp, file = "/home/output_for_ML/co-correlated-features_spearman80_covariates.csv", quote = F, row.names = FALSE)
 
 ## Just low-medium clusters - 140 samples
 corr_clean_bi <- corr_clean_write %>% filter(., cluster != 2)
-write.csv(corr_clean_bi, file = "output_for_ML/diet-life_input_bi.csv", quote = F, row.names = F)
+#write.csv(corr_clean_bi, file = "/home/output_for_ML/diet-life_input_bi.csv", quote = F, row.names = F)
 
 ## Just low-high clusters - 92 samples
 corr_clean_low_high <- corr_clean_write %>% filter(., cluster != 1) %>% 
   mutate(., cluster = ifelse(cluster == 2, 1, 0))
-write.csv(corr_clean_low_high, file = "output_for_ML/diet-life_input_low-high.csv", quote = F, row.names = F)
+#write.csv(corr_clean_low_high, file = "/home/output_for_ML/diet-life_input_low-high.csv", quote = F, row.names = F)
 
 #############
 ## MICROBIOME
@@ -290,8 +290,9 @@ write.csv(corr_clean_low_high, file = "output_for_ML/diet-life_input_low-high.cs
 ## data
 
 ## read in rarefied microbiome - ***family level***
-microbiome_family <- read_delim("/home/datasets/from_andrew/mpa_rare_5833371_perm_5_family.csv", delim = ",")
-microbiome_family <- mpa_taxa_group_otu
+## file from gen_basic_env.R:
+microbiome_family <- read_delim("/home/data/mpa_rare_5833371_perm_5_family.csv", delim = ",")
+
 ## get the correlated features to a dataframe
 microbiome_features_post_process <- preprocess_data(dataset = microbiome_family,
                                                      method = NULL,
@@ -303,7 +304,7 @@ cor_tmp <- mikropml:::group_correlated_features(microbiome_features_post_process
 cor_tmp <- as.data.frame(cor_tmp)
 cor_tmp <- cor_tmp %>% separate(., col = cor_tmp, into = c("keep", "co-correlated"), sep = "\\|", extra = "merge")
 microbiome_family_clean <- microbiome_features_post_process$dat_transformed %>% select(., cor_tmp$keep)
-write.csv(microbiome_family_clean, file = "/home/datasets/new_datasets/output_for_ml/microbiome_family.csv", quote = F, row.names = F)
+#write.csv(microbiome_family_clean, file = "/home/output_for_ml/microbiome_family.csv", quote = F, row.names = F)
 
 
 ## read in rarefied microbiome - ***genus level***

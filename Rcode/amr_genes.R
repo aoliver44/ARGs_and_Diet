@@ -36,7 +36,7 @@ library(bestNormalize)
 library(janitor)
 library(patchwork)
 library(car)
-setwd("/home/datasets/")
+setwd("/home/data/")
 
 ## define function for CV
 CV <- function(x){
@@ -44,8 +44,8 @@ CV <- function(x){
 }
 
 ## read in data
-amr_genes <- read.csv("amr_genes/FL100_merged_norm_final.csv", check.names = F)
-abx_cluster <- read_delim("from_andrew/abx_cluster_andrew.csv", delim = ",")[2:3]
+amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F)
+abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",")[2:3]
 
 ########################
 ## Barplot for mechanism
@@ -118,7 +118,7 @@ figure_1c <- ggplot(data = andrew_cluster_volcano, aes(x = andrew_cluster, y = t
 
 abx_cluster_andrew <- andrew_cluster_volcano %>% select(., -total_gene_abundance) %>% rename(., "cluster" = "andrew_cluster")
 ## Write main abundance file
-#write.csv(abx_cluster_andrew, file = "from_andrew/abx_cluster_andrew.csv", quote = F)
+#write.csv(abx_cluster_andrew, file = "abx_cluster_andrew.csv", quote = F)
 
 ## plot
 ## relative abundance 
@@ -224,8 +224,8 @@ beta.mds$stress
 ################################
 
 ## read in data
-amr_genes <- read.csv("amr_genes/FL100_merged_norm_final.csv", check.names = F)
-abx_cluster <- read_delim("from_andrew/abx_cluster_andrew.csv", delim = ",")[2:3]
+amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F)
+abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",")[2:3]
 
 ## group AMR by group
 amr_genes_mech <- amr_genes %>% 
@@ -260,7 +260,7 @@ all_diversity <- cbind(Evenness, richness, shannon_div)
 
 ## merge with Nutritional Metadata
 ## read in metadata clusters
-abx_clusters <- read_csv("../datasets/from_andrew/abx_cluster_andrew.csv")[2:3]
+abx_clusters <- read_csv("abx_cluster_andrew.csv")[2:3]
 alpha_diversity_data <- merge(abx_clusters, all_diversity, by.x = "subject_id", by.y = "row.names")
 
 ## This is for ggplot. Change the measure vars for what y-axis you want to plot

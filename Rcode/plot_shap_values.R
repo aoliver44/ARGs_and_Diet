@@ -29,13 +29,13 @@ library(tidyverse)
 library(patchwork)
 library(reshape2)
 library(viridis)
-setwd("/home/machine_learning/new_dataset_models/shap_values/")
+setwd("/home/data/")
 
 ## read in shap data - diet + lifestyle - bi (low vs medium)
 diet_lifestyle_bi_shap <- read_delim(file = "diet-life_bi_class1_shapvals-NEW.csv")
 diet_lifestyle_bi_shap <- diet_lifestyle_bi_shap %>% select(., -c(`...1`))
 ## read in raw data - diet + lifestyle - bi (low vs medium)
-diet_lifestyle_bi_raw <- read_delim(file = "/home/datasets/new_datasets/output_for_ml/diet-life_input_bi.csv")
+diet_lifestyle_bi_raw <- read_delim(file = "/home/data/diet-life_input_bi.csv")
 #diet_lifestyle_bi_raw <- diet_lifestyle_bi_raw %>% select(., -c(`...1`, `Unnamed: 0`))
 
 #########################
@@ -136,7 +136,7 @@ figure_4a <- feature_plots_shap$pd_whole_tree_total + feature_plots_raw$pd_whole
   feature_plots_shap$pf_organ + feature_plots_raw$pf_organ +
   feature_plots_shap$hdl_bd1 + feature_plots_raw$hdl_bd1 +
   feature_plots_shap$coumestrol + feature_plots_raw$coumestrol +
-  #feature_plots_shap$avg_fibe_tnfs + feature_plots_raw$avg_fibe_tnfs +
+  feature_plots_shap$avg_fibe_tnfs + feature_plots_raw$avg_fibe_tnfs +
   plot_layout(design = fig_layout_final)
 
 

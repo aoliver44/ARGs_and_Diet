@@ -33,7 +33,7 @@ library(reshape2)
 library(janitor)
 
 ## calculate alpha diveristy
-mpa_rare <- readRDS("/home/Kracken/mpa_rare_5833371_perm_5.rds")
+mpa_rare <- readRDS("/home/data/mpa_rare_5833371_perm_5.rds")
 shannon_div <- diversity(mpa_rare, "shannon") 
 richness <- specnumber(mpa_rare)
 Evenness <- shannon_div/log(richness)
@@ -41,7 +41,7 @@ all_diversity <- cbind(Evenness, richness, shannon_div)
 
 ## merge with Nutritional Metadata
 ## read in metadata clusters
-abx_clusters <- read_csv("/home/datasets/new_datasets/abx_cluster_andrew.csv")
+abx_clusters <- read_csv("/home/data/abx_cluster_andrew.csv")
 abx_clusters <- abx_clusters %>% select(., subject_id, cluster)
 alpha_diversity_data <- merge(abx_clusters, all_diversity, by.x = "subject_id", by.y = "row.names")
 
@@ -55,7 +55,7 @@ figure_2a <- alpha_diversity_data_melt %>% filter(., variable == "shannon_div") 
   aes(x = cluster, y = value, fill = cluster) +
   geom_boxplot(outlier.shape = NA) + geom_point(position = position_jitterdodge(), alpha = 0.3) +
   ##geom_jitter(width = 0.15, alpha = 0.2) +
-  labs(x = '') +
+  labs(x = '', y = "Shannon Diversity") +
   theme_bw(base_size = 14) + 
   theme(legend.position = "none") + 
   #facet_wrap(.~variable, scales = "free") + 
@@ -106,7 +106,7 @@ beta.mds$stress
 #### Vector plot from ML results
 ## Permanovas
 set.seed(999)
-vector_data <- read_delim(file = "/home/datasets/output-for-ML/microbiome_family.csv")
+vector_data <- read_delim(file = "/home/data/microbiome_family.csv")
 vector_data_species <- vector_data %>% select(., -cluster)
 ## vis of MDS of the data
 set.seed(seed = 999)
@@ -128,12 +128,12 @@ ggplot() +
                      panel.background = element_blank()) + scale_color_jama()
 
 # vectorize the random forest selected taxa
-ml_predictors <- c("f__f__CAG-508", "f__f__Enterobacteriaceae", "f__f__Streptococcaceae", "f__f__Treponemataceae", "f__f__CAG-302", "f__f__Lachnospiraceae")
-
+ml_predictors_box <- c("cluster", "f__f__CAG-508", "f__f__Enterobacteriaceae", "f__f__Streptococcaceae", 
+                       "f__f__Treponemataceae", "f__f__CAG-302", "f__f__Lachnospiraceae") %>% janitor::make_clean_names()
 set.seed(123)
 vf <- envfit(sites, vector_data_species, perm = 99)
 vf_scores <- as.data.frame(scores(vf, display = "vectors"))
-vf_scores <- vf_scores[rownames(vf_scores) %in% ml_predictors, ]
+vf_scores <- vf_scores[rownames(vf_scores) %in% ml_predictors_box, ]
 vf_scores$species <- rownames(vf_scores)
 figure_4c_1 <- ggplot(data = nmds.sites, aes(x = NMDS1, y = NMDS2)) + 
   labs(x = "NMDS1", y = "NMDS2", shape = "Site") +
@@ -143,11 +143,7 @@ figure_4c_1 <- ggplot(data = nmds.sites, aes(x = NMDS1, y = NMDS2)) +
   geom_text(data = vf_scores, aes(x = NMDS1, y = NMDS2, label = species), size = 3, position = position_dodge(width = 1)) +
   theme_bw(base_size = 14)+ theme(panel.grid = element_blank()) + scale_color_jama()
 
-
-ml_predictors_box <- c("cluster", "f__f__CAG-508", "f__f__Enterobacteriaceae", "f__f__Streptococcaceae", 
-                       "f__f__Treponemataceae", "f__f__CAG-302", "f__f__Lachnospiraceae")
-
-figure_4c_2 <- vector_data %>% select(., any_of(ml_predictors_box)) %>% melt(., id.vars = "cluster") %>%
+figure_4c_2 <- vector_data %>% dplyr::select(., any_of(ml_predictors_box)) %>% melt(., id.vars = "cluster") %>%
   ggplot() + aes(x = as.factor(cluster), y = log(value), group = as.factor(cluster)) + geom_boxplot(aes(fill = as.factor(cluster)), outlier.alpha = 0) +
   geom_point(position = position_jitter(width = 0.1), alpha = 0.2) +
   facet_wrap(.~ variable, ncol = 2, scales = "free_y") + theme_bw() + scale_fill_jama() + theme(panel.background = element_blank(), 

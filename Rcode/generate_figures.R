@@ -31,7 +31,7 @@ library(patchwork)
 ## Table 1
 ##########
 
-source(file = "/home/scripts/merging_features_new_data.R")
+source(file = "/home/Rcode/merging_features_new_data.R")
 abx_cluster$cluster <- factor(abx_cluster$cluster, 
                               levels = c("low", "medium", "high"), ordered = T)
 merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
@@ -48,7 +48,7 @@ merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
 ## Figure 1
 ############
 
-source(file = "/home/scripts/amr_genes.R")
+source(file = "/home/Rcode/amr_genes.R")
 
 fig_1_layout <- "
 AAB
@@ -62,7 +62,7 @@ figure_1a + figure_1b + figure_1c +
 ## Figure 2
 ############
 
-source(file = "/home/scripts/alpha_diversity.R")
+source(file = "/home/Rcode/alpha_diversity.R")
 
 fig_2_layout <- "
 ABB"
@@ -75,7 +75,7 @@ figure_2a + figure_2b +
 ## Table 2
 ############
 
-source(file = "/home/scripts/directed_hypothesis_testing.R")
+source(file = "/home/Rcode/directed_hypothesis_testing.R")
 
 View(directed_hypothesis_table)
 
@@ -100,8 +100,8 @@ figure_3ab + figure_3cd +
 
 ## note, figure 4b and 4d were generated using python
 
-#source(file = "/home/scripts/alpha_diversity.R")
-source(file = "/home/scripts/plot_shap_values.R")
+source(file = "/home/Rcode/alpha_diversity.R")
+source(file = "/home/Rcode/plot_shap_values.R")
 
 fig_4_layout <- "
 AABC
@@ -117,7 +117,7 @@ figure_4a + figure_4c_1 + figure_4c_2 +
 ########################
 
 ## Table 1
-source(file = "/home/scripts/merging_features_new_data.R")
+source(file = "/home/Rcode/merging_features_new_data.R")
 abx_cluster$cluster <- factor(abx_cluster$cluster, 
                               levels = c("low", "medium", "high"), ordered = T)
 merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
@@ -131,10 +131,11 @@ merge(abx_cluster, bmi_etc, by = "subject_id", all.x = T) %>%
                                all_categorical() ~ "{n} ({p}%)")) 
 
 ## Table 2
-abx_cluster$cluster <- factor(abx_cluster$cluster, 
-                              levels = c("low", "medium", "high"), ordered = T)
-subseted_features_no_na %>%
-  filter(., cluster != "") %>% 
+
+abx_cluster_features_no_na %>%
+  filter(., cluster != "") %>%
+  mutate(., cluster = ifelse(cluster == 0, "low", 
+                             ifelse(cluster == 1, "medium", "high"))) %>%
   select(., cluster, age, bmi_final, sex, ethnicity, birth_country) %>%
   mutate(., sex = ifelse(sex == 1, "male", "female")) %>%
   tbl_summary(., by = "cluster", 
