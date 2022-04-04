@@ -7,7 +7,7 @@
 ### **Containers for reproducibility**
 - A docker container for analysis in R and ML analysis are provided. Docker must be installed to run. These images were built and run on Docker v4.1.1. To run, inside the directory of the appropriate folder (R or python), run: ```docker build -t [tag_name] .```
 - In order to run the R container, run: ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARG_scripts_and_data:/home amr_r_env``` (or whatever you named the container)
-- In order to run the ML container: ```docker run --rm -it -p 8888:8888 -v path/to/ARG_scripts_and_data/:/home/ amr_py_env /bin/bash -c "cd /home && jupyter notebook --ip='0.0.0.0' --port=8888 --no-browser --allow-root"``` (or whatever you named the ML container)
+- In order to run the ML container: ```docker run --rm -it -p 8888:8888 -v path/to/ARG_scripts:/home/Rcode/ -v path/to/ARG_data:/home/data/ amr_py_env /bin/bash -c "cd /home && jupyter notebook --ip='0.0.0.0' --port=8888 --no-browser --allow-root"``` (or whatever you named the ML container)
 - both of these ```docker run``` commands will spin up a local host server. If  you are using chrome, navigate to the appropriate site (i.e., localhost:8787 for Rstudio or localhost:8888 for Jupyter)
 
 ### **Code**
