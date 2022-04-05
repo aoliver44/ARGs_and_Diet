@@ -7,8 +7,20 @@
 ### **Containers for reproducibility**
 - A docker container for analysis in R and ML analysis are provided. Docker must be installed to run. These images were built and run on Docker v4.1.1. To run, inside the directory of the appropriate folder (R or python), run: 
     - ```docker build -t [tag_name] .```
-- In order to run the R container, run: 
-    - ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARG_scripts:/home/Rcode/ -v path/to/ARG_scripts:/home/data/ amr_r_env``` (or whatever you named the container)
+    - Example: ```docker build -t amr_r_env:1.0 .```
+- In order to run the R container: 
+    1. first clone the repo to your local machine
+    2. ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARGs_and_Diet/Rcode:/home/Rcode/ -v path/to/ARGs_and_Diet/data:/home/data/ amr_r_env``` (or whatever you named the container)
+    3. navigate to http://localhost:8787/ in a browser window
+    4. log into the Rstudio local server
+        - username: rstudio
+        - password: yourpasswordhere (if you didnt set one in docker run command)
+    5. change to the scripts working directory inside R.
+        - setwd("/home/Rcode")
+    6. navigate the filesystem to the working directory.
+        - ![plot showing changing working directory in the file pane](https://github.com/aoliver44/ARGs_and_Diet/blob/main/utilities/readme_picture.png)
+
+
 - In order to run the ML container: 
     - ```docker run --rm -it -p 8888:8888 -v path/to/ARG_scripts_and_data/:/home/ amr_py_env /bin/bash -c "cd /home && jupyter notebook --ip='0.0.0.0' --port=8888 --no-browser --allow-root"``` (or whatever you named the ML container)
 - both of these ```docker run``` commands will spin up a local host server. If  you are using chrome, navigate to the appropriate site (i.e., localhost:8787 for Rstudio or localhost:8888 for Jupyter)
