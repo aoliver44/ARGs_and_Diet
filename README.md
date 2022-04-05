@@ -4,7 +4,9 @@
 ### **Data Availibility**
 - Metagenomes are deposited in NCBI Sequence Read Archive (SRA) under the [study accession SRP354271](https://dataview.ncbi.nlm.nih.gov/object/PRJNA795985). Requests for non-metagenomic data from the USDA ARS WHNRC Nutritional Phenotyping Study used in this analysis should be made via an email to the senior WHNRC author on the publication of interest. Requests will be reviewed quarterly by a committee consisting of the study investigators.
 
+________________________________________
 ### **Containers for reproducibility**
+_________________________________________________
 - A docker container for analysis in R and ML analysis are provided. Docker must be installed to run. These images were built and run on Docker v4.1.1. To run, inside the directory of the appropriate folder (R or python), run: 
     - ```docker build -t [tag_name] .```
     - Example: ```docker build -t amr_r_env:1.0 .```
