@@ -16,7 +16,7 @@ _________________________________________________
 - **In order to run the R container:**
 
     1. first clone the repo to your local machine
-    2. ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARGs_and_Diet/Rcode:/home/Rcode/ -v path/to/ARGs_and_Diet/data:/home/data/ amr_r_env``` (or whatever you named the container)
+    2. ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARGs_and_Diet/Rcode:/home/Rcode/ -v path/to/ARGs_and_Diet/data:/home/data/ amr_r_env:1.0``` (or whatever you named the container)
     3. navigate to http://localhost:8787/ in a browser window
     4. log into the Rstudio local server
         - username: rstudio
