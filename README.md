@@ -18,12 +18,13 @@
     5. change to the scripts working directory inside R.
         - setwd("/home/Rcode")
     6. navigate the filesystem to the working directory.
-        - ![plot showing changing working directory in the file pane](https://github.com/aoliver44/ARGs_and_Diet/blob/main/utilities/readme_picture.png)
+        ![plot showing changing working directory in the file pane](https://github.com/aoliver44/ARGs_and_Diet/blob/main/utilities/readme_picture.png)
 
 
 - In order to run the ML container: 
-    - ```docker run --rm -it -p 8888:8888 -v path/to/ARG_scripts_and_data/:/home/ amr_py_env /bin/bash -c "cd /home && jupyter notebook --ip='0.0.0.0' --port=8888 --no-browser --allow-root"``` (or whatever you named the ML container)
-- both of these ```docker run``` commands will spin up a local host server. If  you are using chrome, navigate to the appropriate site (i.e., localhost:8787 for Rstudio or localhost:8888 for Jupyter)
+    1. ```docker run --rm -it -p 8888:8888 -v path/to/ARG_scripts_and_data/:/home/ amr_py_env /bin/bash -c "cd /home && jupyter notebook --ip='0.0.0.0' --port=8888 --no-browser --allow-root"``` (or whatever you named the ML container)
+    2. navigate to http://localhost:8888/ in a browser window
+    3. copy a token from the terminal and paste it in the browser window where it asks for one.
 
 ### **Code**
 - all code used in this analysis is provided
