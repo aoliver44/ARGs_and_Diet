@@ -44,5 +44,5 @@ _______________
 - R analyses were run locally on a intel-based macbook pro
 - ML analyses were run on Ceres, a supercomputer for use by USDA researchers
 - Sequence preprocessing was run on Spitfire, a slurm-based HPC cluster managed by the UC Davis Genome Center
-    - code for sequencing preprocessing can be found [here]()
+    - code for sequencing preprocessing can be found [here](https://github.com/dglemay/ARG_metagenome)
 
