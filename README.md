@@ -38,7 +38,7 @@ _____________
 _____________
 - to generate most of the main/supp figures and tables in the manuscript, run generate_figures.R script with the necessary scripts for sourcing and necessary input data
 ____________
-### **Code**
+### **Computing Environments**
 _______________
 - all code used in this analysis is provided
 - R analyses were run locally on a intel-based macbook pro
