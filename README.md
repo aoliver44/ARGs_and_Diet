@@ -24,6 +24,7 @@ _________________________________________________
     5. change to the scripts working directory inside R.
         - setwd("/home/Rcode")
     6. navigate the filesystem to the working directory.
+    
         ![plot showing changing working directory in the file pane](https://github.com/aoliver44/ARGs_and_Diet/blob/main/utilities/readme_picture.png)
 
 - **In order to run the ML container:** 
