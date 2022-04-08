@@ -113,7 +113,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$per_kcal_fiber_tnfs)
 for_directed_hypothesis_testing$per_kcal_fiber_tnfs_log <- (bestNormalize::yeojohnson(for_directed_hypothesis_testing$per_kcal_fiber_tnfs))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, yeojohnson transformation performed
 transformation_test <- append(transformation_test,c("yeojohnson, ANOVA, Tukey"))
 mod <- aov(per_kcal_fiber_tnfs_log ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -151,7 +151,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$total_fiber)
 for_directed_hypothesis_testing$total_fiber_log <- (bestNormalize::yeojohnson(for_directed_hypothesis_testing$total_fiber))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, yeojohnson transformation performed
 transformation_test <- append(transformation_test,c("yeojohnson, ANOVA, Tukey"))
 mod <- aov(total_fiber_log ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -189,7 +189,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$total_fiber_per_kcal)
 for_directed_hypothesis_testing$total_fiber_per_kcal_log <- (bestNormalize::arcsinh_x(for_directed_hypothesis_testing$total_fiber_per_kcal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, arcsinh transformation performed
 transformation_test <- append(transformation_test,c("arcsinh, ANOVA, Tukey"))
 mod <- aov(total_fiber_per_kcal_log ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -228,7 +228,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$dt_fiber_sol)
 for_directed_hypothesis_testing$dt_fiber_sol_log <- (bestNormalize::yeojohnson(for_directed_hypothesis_testing$dt_fiber_sol))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, yeojohnson transformation performed
 transformation_test <- append(transformation_test,c("yeojohnson, ANOVA, Tukey"))
 mod <- aov(dt_fiber_sol_log ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -266,7 +266,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$dt_fiber_sol_per_kcal)
 for_directed_hypothesis_testing$dt_fiber_sol_per_kcal_boxcox <- (bestNormalize::log_x(for_directed_hypothesis_testing$dt_fiber_sol_per_kcal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, Log10 transformation performed
 transformation_test <- append(transformation_test,c("Log10(x), ANOVA, Tukey"))
 mod <- aov(dt_fiber_sol_per_kcal_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -304,7 +304,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$dt_prot_animal)
 for_directed_hypothesis_testing$dt_prot_animal_log<- (bestNormalize::arcsinh_x(for_directed_hypothesis_testing$dt_prot_animal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, arcsinh_x transformation performed
 transformation_test <- append(transformation_test,c("arcsinh, ANOVA, Tukey"))
 mod <- aov(dt_prot_animal_log ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -381,7 +381,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$dt_kcal)
 for_directed_hypothesis_testing$dt_kcal_boxcox<- (bestNormalize::arcsinh_x(for_directed_hypothesis_testing$dt_kcal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, arcsinh_x transformation performed
 transformation_test <- append(transformation_test,c("arcsinh, ANOVA, Tukey"))
 mod <- aov(dt_kcal_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -419,7 +419,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$pf_mps_total)
 for_directed_hypothesis_testing$pf_mps_total_boxcox<- (bestNormalize::arcsinh_x(for_directed_hypothesis_testing$pf_mps_total))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, arcsinh transformation performed
 transformation_test <- append(transformation_test,c("arcsinh, ANOVA, Tukey"))
 mod <- aov(pf_mps_total_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -457,7 +457,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$pf_mps_total_per_kcal)
 for_directed_hypothesis_testing$pf_mps_total_per_kcal_boxcox<- (bestNormalize::yeojohnson(for_directed_hypothesis_testing$pf_mps_total_per_kcal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, yeojohnson transformation performed
 transformation_test <- append(transformation_test,c("yeojohnson, ANOVA, Tukey"))
 mod <- aov(pf_mps_total_per_kcal_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions
@@ -533,7 +533,7 @@ shapiro.test(resids)
 set.seed(2022)
 bestNormalize::bestNormalize(for_directed_hypothesis_testing$pf_meat_per_kcal)
 for_directed_hypothesis_testing$pf_meat_per_kcal_boxcox<- (bestNormalize::yeojohnson(for_directed_hypothesis_testing$pf_meat_per_kcal))$x.t
-## many good options, Box-Cox transformation performed
+## many good options, yeojohnson transformation performed
 transformation_test <- append(transformation_test,c("yeojohnson, ANOVA, Tukey"))
 mod <- aov(pf_meat_per_kcal_boxcox ~ cluster, data = for_directed_hypothesis_testing)
 ## re-test those assumptions

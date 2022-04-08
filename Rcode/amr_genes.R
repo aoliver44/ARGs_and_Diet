@@ -36,6 +36,7 @@ library(bestNormalize)
 library(janitor)
 library(patchwork)
 library(car)
+library(mikropml)
 setwd("/home/data/")
 
 ## define function for CV
@@ -90,16 +91,11 @@ amr_genes_mech_melt <- amr_genes_mech_melt %>% group_by(., subject_id) %>%
 
 ## get andrew clusters based on quartiles
 ## ex high is > 0.75 , med = 0.25-0.50, low < 0.25 OF TOTAL AMR ABUNDANCE
-#amr_genes_mech_melt <- amr_genes_mech_melt %>% 
-#  ungroup() %>% 
-#  mutate(., andrew_cluster = ifelse(total_gene_abundance < 49.85, "low", 
-#                                    ifelse(total_gene_abundance > 60.02, "high", "medium")))
-
-## based on tertiles
 amr_genes_mech_melt <- amr_genes_mech_melt %>% 
   ungroup() %>% 
-  mutate(., andrew_cluster = ifelse(total_gene_abundance < 51.63147, "low", 
-                                    ifelse(total_gene_abundance > 57.67642, "high", "medium")))
+  mutate(., andrew_cluster = ifelse(total_gene_abundance < 49.86401, "low", 
+                                    ifelse(total_gene_abundance > 59.99973, "high", "medium")))
+
 
 ## plot distribution of andrew-clusters (figure 1C)
 andrew_cluster_volcano <- amr_genes_mech_melt %>% 
@@ -192,7 +188,7 @@ cluster_permanova
 ## check permanova assumptions - FAIL
 tmp <- amr_genes_mech_beta_permanova %>% 
   column_to_rownames(., var = "subject_id") %>% 
-  select(., 2:390)
+  select(., 2:(NCOL(amr_genes_mech_beta_permanova) -1 ))
 tmp_dist <- vegdist(tmp, method = "bray")
 tmp <- betadisper(tmp_dist, group = amr_genes_mech_beta_permanova$cluster, type = "centroid")
 anova(tmp)

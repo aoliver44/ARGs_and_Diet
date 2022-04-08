@@ -32,8 +32,11 @@ library(ggplot2)
 library(reshape2)
 setwd("/home/data/")
 
+## source the normal set of data
+#source("/home/Rcode/merging_features_new_data.R")
+
 ## read in data
-amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F)
+amr_genes <- read.csv("FL100_merged_norm_final.csv", check.names = F) %>% drop_na()
 abx_cluster <- read_delim("abx_cluster_andrew.csv", delim = ",")[2:3]
 
 ## group AMR by MEGID
@@ -64,7 +67,7 @@ meg_1039_data <- amr_genes_MEGID %>%
   select(., subject_id, meg_1039)
 meg_1039_data <- merge(meg_1039_data, blythe_data, by = "subject_id")
 
-figure_3ab <- meg_1039_data %>% select(., dt_fiber_sol, meg_1039, cluster, subject_id) %>%
+figure_3ab <- meg_1039_data %>% select(., dt_kcal, dt_fiber_sol, meg_1039, cluster, subject_id) %>%
   melt(., id.vars = c("subject_id", "cluster", "meg_1039")) %>%
   ggplot() + aes(x = value, y = log(meg_1039 + 0.1)) +
   geom_point(aes(color = cluster)) +
