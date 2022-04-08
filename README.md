@@ -16,7 +16,7 @@ _________________________________________________
 - **In order to run the R container:**
 
     1. first clone the repo to your local machine
-    2. ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARGs_and_Diet/Rcode:/home/Rcode/ -v path/to/ARGs_and_Diet/data:/home/data/ amr_r_env``` (or whatever you named the container)
+    2. ```docker run --rm -it -p 8787:8787 -e PASSWORD=yourpasswordhere -v path/to/ARGs_and_Diet/Rcode:/home/Rcode/ -v path/to/ARGs_and_Diet/data:/home/data/ amr_r_env:1.0``` (or whatever you named the container)
     3. navigate to http://localhost:8787/ in a browser window
     4. log into the Rstudio local server
         - username: rstudio
@@ -38,11 +38,11 @@ _____________
 _____________
 - to generate most of the main/supp figures and tables in the manuscript, run generate_figures.R script with the necessary scripts for sourcing and necessary input data
 ____________
-### **Code**
+### **Computing Environments**
 _______________
 - all code used in this analysis is provided
 - R analyses were run locally on a intel-based macbook pro
 - ML analyses were run on Ceres, a supercomputer for use by USDA researchers
 - Sequence preprocessing was run on Spitfire, a slurm-based HPC cluster managed by the UC Davis Genome Center
-    - code for sequencing preprocessing can be found [here]()
+    - code for sequencing preprocessing can be found [here](https://github.com/dglemay/ARG_metagenome)
 
