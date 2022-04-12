@@ -34,7 +34,7 @@ library(tidyverse)
 library(EcolUtils)
 library(reshape2)
 
-setwd("/home/Kracken/")
+setwd("/home/data/")
 
 ###############
 ## READ IN DATA 
