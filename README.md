@@ -1,5 +1,5 @@
 # Association of diet and antimicrobial resistance
- Scripts and docker images used in paper: Association of diet and antimicrobial resistance in healthy US adults. Paper has been published in XXXXXX and can be found here: XXXXXX
+ Scripts and docker images used in paper: Association of diet and antimicrobial resistance in healthy US adults. A paper on this work has been published in Mbio and can be found [here](https://journals.asm.org/doi/full/10.1128/mbio.00101-22).
 
 ______________
 ### **Data Availibility**
